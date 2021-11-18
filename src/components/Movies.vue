@@ -4,13 +4,16 @@
       <input v-model="search" type="text">
     <button @click="callApi(search)">Search movie</button>
     </div>
-    <div class="movie" v-for="movie in movies" :key="movie.id">
+    <div class="movies">
+      <div class="movie" v-for="movie in movies" :key="movie.id">
       <div class="specifications_movie">
           <h4>Title: {{movie.title}}</h4>
           <h5>Original title: {{movie.original_title}}</h5>
           <p>Language: {{movie.original_language}}</p>
           <p>Vote: {{movie.vote_average}}</p>
       </div>
+    </div>
+    <h5>{{problem}}</h5>
     </div>
   </div>
 </template>
@@ -21,24 +24,32 @@ export default {
   data () {
     return {
       search: '',
-      movies: []
+      movies: [],
+      problem: ''
     }
   },
   methods: {
-    callApi (textInput) {
+    getMovie (textInput) {
       this.search = textInput
-      console.log(this.search)
+      // console.log(this.search)
+    },
+    callApi () {
+      this.getMovie(this.search)
       axios
-      // eslint-disable-next-line quotes
+        // eslint-disable-next-line quotes
         .get('https://api.themoviedb.org/3/search/movie?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US&query=' + this.search + "&page=1&include_adult=false")
         .then((response) => {
-          console.log(response)
+          // console.log(response)
           this.movies = response.data.results
-          console.log(this.movies)
+          // console.log(this.movies)
         })
         .catch((error) => {
-          console.log(error)
+          // console.log(error)
+          this.problem = error
+          this.movies = ''
+          console.log(this.problem)
         })
+      this.search = ''
     }
 
   }
