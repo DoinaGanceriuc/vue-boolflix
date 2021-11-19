@@ -20,7 +20,9 @@
             </div>
           </div>
            <!-- /.languages -->
-          <p>Vote: {{movie.vote_average}}</p>
+           <div>
+             <p>Vote: {{movie.vote_average}} <i :class="classStars" ></i></p>
+           </div>
       </div>
       <!-- /.specifications_movie -->
     </div>
@@ -51,7 +53,9 @@ export default {
         }
       ],
       countryCode: '',
-      status: ''
+      status: '',
+      classStars: 'fas fa-star',
+      ratings: [1, 2, 3, 4, 5]
     }
   },
   methods: {
@@ -94,14 +98,39 @@ export default {
     flagsLanguage (listOfFlags) {
       listOfFlags.forEach(flag => {
         this.iconsNations(flag)
+        this.changeVotes(flag)
+        this.starsVotes(flag)
       })
       return listOfFlags
     },
     iconsNations (icon) {
       this.flags.forEach(element => {
-        console.log(element)
+        // console.log(element)
         if (icon.original_language === element.chiave) {
           icon.original_language = element.image
+        }
+      })
+    },
+    changeVotes (item) {
+      item.vote_average = Math.round(item.vote_average)
+      if (item.vote_average === 10) {
+        item.vote_average = 5
+      } else if (item.vote_average === 9) {
+        item.vote_average = 4
+      } else if (item.vote_average === 8) {
+        item.vote_average = 3
+      } else if (item.vote_average === 7) {
+        item.vote_average = 2
+      } else if (item.vote_average === 6) {
+        item.vote_average = 1
+      }
+    },
+    starsVotes (star) {
+      this.ratings.forEach(rate => {
+        // console.log(rate)
+        if (star.vote_average === 1) {
+          star.vote_average = rate
+          console.log(star.vote_average)
         }
       })
     }
