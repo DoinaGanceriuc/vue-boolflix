@@ -20,9 +20,12 @@
             </div>
           </div>
            <!-- /.languages -->
-           <div>
-             <p>Vote: {{movie.vote_average}} <i :class="classStars" ></i></p>
+           <div v-if="movie.vote_average >= 1">
+             <p>Vote: <i class="stars" :class="classStars" v-for="index in movie.vote_average" :key="index.id"></i> </p>
            </div>
+           <div v-else>
+             <p>Vote: {{movie.vote_average}} </p>
+             </div>
       </div>
       <!-- /.specifications_movie -->
     </div>
@@ -54,8 +57,7 @@ export default {
       ],
       countryCode: '',
       status: '',
-      classStars: 'fas fa-star',
-      ratings: [1, 2, 3, 4, 5]
+      classStars: 'fas fa-star'
     }
   },
   methods: {
@@ -99,7 +101,6 @@ export default {
       listOfFlags.forEach(flag => {
         this.iconsNations(flag)
         this.changeVotes(flag)
-        this.starsVotes(flag)
       })
       return listOfFlags
     },
@@ -124,15 +125,6 @@ export default {
       } else if (item.vote_average === 6) {
         item.vote_average = 1
       }
-    },
-    starsVotes (star) {
-      this.ratings.forEach(rate => {
-        // console.log(rate)
-        if (star.vote_average === 1) {
-          star.vote_average = rate
-          console.log(star.vote_average)
-        }
-      })
     }
 
   }
@@ -163,6 +155,9 @@ export default {
       & img {
         margin-left: 0.5rem ;
       }
+    }
+    .stars {
+      color: gold;
     }
   }
 }
