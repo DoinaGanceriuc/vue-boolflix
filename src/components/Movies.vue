@@ -7,6 +7,9 @@
     <!-- /.search_bar -->
     <div class="movies">
       <div class="movie" v-for="movie in movies" :key="movie.id">
+         <div class="jumbo_movie">
+        <img :src="'http://image.tmdb.org/t/p/w300/'+ movie.poster_path" alt="">
+      </div>
       <div class="specifications_movie">
           <h4>Title: {{movie.title}} {{movie.name}}</h4>
           <h5>Original title: {{movie.original_title}} {{movie.original_name}}</h5>
