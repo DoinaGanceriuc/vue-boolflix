@@ -11,9 +11,9 @@
           <h4>Title: {{movie.title}} {{movie.name}}</h4>
           <h5>Original title: {{movie.original_title}} {{movie.original_name}}</h5>
           <div class="languages">
-            <p>Language:</p>
-            <div>
-              <img :src="movie.original_language" :alt="movie.original_language" width="25">
+            <p>Language: </p>
+            <div class="flag">
+              <img :src="movie.original_language" :alt="movie.original_language" width="25" >
             </div>
           </div>
            <!-- /.languages -->
@@ -37,8 +37,18 @@ export default {
       search: '',
       movies: [],
       problem: '',
-      flags: [],
-      countryCode: ''
+      flags: [
+        {
+          chiave: 'en',
+          image: 'https://images.emojiterra.com/twitter/512px/1f1ec-1f1e7.png'
+        },
+        {
+          chiave: 'it',
+          image: 'https://images.emojiterra.com/twitter/512px/1f1ee-1f1f9.png'
+        }
+      ],
+      countryCode: '',
+      status: ''
     }
   },
   methods: {
@@ -80,21 +90,17 @@ export default {
     },
     flagsLanguage (listOfFlags) {
       listOfFlags.forEach(flag => {
-        this.countryCode = flag.original_language
-        if (flag.original_language === this.countryCode) {
-          flag.original_language = 'https://ipdata.co/flags/' + this.countryCode + '.png'
-        } else {
-          flag.original_language = ''
-        }
         this.iconsNations(flag)
       })
       return listOfFlags
     },
     iconsNations (icon) {
-      if (!this.flags.includes(icon.original_language)) {
-        this.flags.push({ image: icon.original_language })
-      }
-      return this.flags
+      this.flags.forEach(element => {
+        console.log(element)
+        if (icon.original_language === element.chiave) {
+          icon.original_language = element.image
+        }
+      })
     }
 
   }
