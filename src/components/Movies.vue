@@ -18,7 +18,7 @@
           <div class="jumbo" v-if="movie.poster_path !== null">
             <img class="poster"
               :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
-              :alt="movie.name"
+              :alt="movie.title"
             />
             <div class="info">
             <div class="specifications">
@@ -52,6 +52,9 @@
               <p><strong> Vote: </strong>{{ movie.vote_average }}</p>
             </div>
                <p v-if="movie.overview !== ''"><strong>Overview:</strong> {{movie.overview}}</p>
+                <div class="cast" v-for="cast in casts" :key="cast.id">
+                 <p v-if="movie.id === id">Cast: {{cast.name}}</p>
+               </div>
             </div>
           <!-- /.specifications -->
           </div>
@@ -96,6 +99,7 @@
           </div>
           </div>
           <!-- /.jumbo -->
+          <button @click='searchMovieCast(movie.id)'>Search cast</button>
         </div>
         <!-- /.movie -->
           <div class="serie" v-for="serie in series" :key="serie.id">
@@ -219,7 +223,9 @@ export default {
       countryCode: '',
       status: '',
       classStars: 'fas fa-star',
-      digitText: ''
+      digitText: '',
+      id: '',
+      casts: []
     }
   },
   methods: {
@@ -234,6 +240,7 @@ export default {
         .then((response) => {
           // console.log(response)
           this.movies = response.data.results
+          console.log(this.movies)
           this.flagsLanguage(this.movies)
         })
         .catch((error) => {
@@ -289,8 +296,27 @@ export default {
       } else if (item.vote_average === 2 || item.vote_average === 1) {
         item.vote_average = 1
       }
-    }
+    },
+    searchMovieCast (id) {
+      this.id = id
+      console.log(id)
+      axios
+        // eslint-disable-next-line quotes
+        .get(`https://api.themoviedb.org/3/movie/${this.id}/credits?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US`)
+        .then((response) => {
+          // console.log(response)
+          this.casts = response.data.cast
+          console.log(this.casts)
+          this.flagsLanguage(this.movies)
 
+          // console.log(this.flagsLanguage(this.series))
+          // this.idList(this.movies)
+        })
+        .catch((error) => {
+          // console.log(error)
+          this.problem = error
+        })
+    }
   }
   /*  mounted: function () {
     this.flagsLanguage()
