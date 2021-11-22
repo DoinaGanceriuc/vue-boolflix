@@ -225,7 +225,6 @@ export default {
   methods: {
     getMovie (textInput) {
       this.digitText = textInput
-      console.log(this.digitText)
       this.callApi()
     },
     callApi () {
@@ -301,15 +300,15 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/scss/variables.scss";
 header {
   height: 100px;
-  background-color: #000;
+  background-color: $bg_base;
   .logo {
     line-height: 100px;
     h2 {
-      color: red;
+      color: $color_logo;
       padding-left: 1rem;
-
     }
   }
 }
@@ -325,7 +324,7 @@ header {
 
     .jumbo {
       height: 100%;
-      border: 1px solid black;
+      border: 1px solid $bg_base;
       position: relative;
       .avaiable {
         text-align: center;
@@ -346,13 +345,13 @@ header {
     .info {
       visibility: hidden;
       height: calc(100% - 83.89px);
-      border: 1px solid black;
+      border: 1px solid $bg_base;
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
       height: 100%;
-      background-color: #000;
+      background-color: $bg_base;
       overflow: auto;
 
       .specifications {
@@ -368,7 +367,7 @@ header {
       }
     }
     .stars {
-      color: gold;
+      color: $color_average;
     }
   }
   }
