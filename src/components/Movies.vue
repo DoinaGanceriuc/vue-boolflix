@@ -247,7 +247,6 @@ export default {
         .then((response) => {
           // console.log(response)
           this.movies = response.data.results
-          console.log(this.movies)
           this.flagsLanguage(this.movies)
         })
         .catch((error) => {
@@ -306,14 +305,12 @@ export default {
     },
     searchMovieCast (id) {
       this.id = id
-      console.log(id)
       axios
         // eslint-disable-next-line quotes
         .get(`https://api.themoviedb.org/3/movie/${this.id}/credits?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US`)
         .then((response) => {
           // console.log(response)
           this.casts = response.data.cast
-          console.log(this.casts)
           this.flagsLanguage(this.movies)
         })
         .catch((error) => {
@@ -323,14 +320,12 @@ export default {
     },
     searchSerieCast (id) {
       this.id = id
-      console.log(id)
       axios
         // eslint-disable-next-line quotes
         .get(`https://api.themoviedb.org/3/tv/${this.id}/credits?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US`)
         .then((response) => {
           // console.log(response)
           this.casts = response.data.cast
-          console.log(this.casts)
           this.flagsLanguage(this.series)
         })
         .catch((error) => {
