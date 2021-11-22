@@ -184,6 +184,9 @@
               <p><strong>Vote: </strong> {{ serie.vote_average }}</p>
             </div>
              <p v-if="serie.overview !== ''"><strong>Overview:</strong> {{serie.overview}}</p>
+             <div class="cast" v-for="cast in casts" :key="cast.id">
+                 <p v-if="serie.id === id">Cast: {{cast.name}}</p>
+               </div>
             </div>
           <!-- /.specifications -->
           </div>
@@ -311,6 +314,7 @@ export default {
         .then((response) => {
           // console.log(response)
           this.casts = response.data.cast
+          this.casts = this.casts.slice(0, 5)
           this.flagsLanguage(this.movies)
         })
         .catch((error) => {
@@ -320,12 +324,14 @@ export default {
     },
     searchSerieCast (id) {
       this.id = id
+      console.log(id)
       axios
         // eslint-disable-next-line quotes
         .get(`https://api.themoviedb.org/3/tv/${this.id}/credits?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US`)
         .then((response) => {
           // console.log(response)
           this.casts = response.data.cast
+          this.casts = this.casts.slice(0, 5)
           this.flagsLanguage(this.series)
         })
         .catch((error) => {
