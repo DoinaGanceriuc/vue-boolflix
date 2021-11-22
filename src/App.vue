@@ -22,5 +22,12 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background-color: #434343;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
 
 </style>
