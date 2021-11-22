@@ -94,6 +94,9 @@
               <p><strong>Vote: </strong> {{ movie.vote_average }}</p>
             </div>
              <p v-if="movie.overview !== ''"><strong>Overview:</strong> {{movie.overview}}</p>
+              <div class="cast" v-for="cast in casts" :key="cast.id">
+                 <p v-if="movie.id === id">Cast: {{cast.name}}</p>
+              </div>
             </div>
           <!-- /.specifications -->
           </div>
@@ -140,6 +143,9 @@
               <p><strong> Vote: </strong>{{ serie.vote_average }}</p>
             </div>
                <p v-if="serie.overview !== ''"><strong>Overview:</strong> {{serie.overview}}</p>
+              <div class="cast" v-for="cast in casts" :key="cast.id">
+                 <p v-if="serie.id === id">Cast: {{cast.name}}</p>
+              </div>
             </div>
           <!-- /.specifications -->
           </div>
@@ -183,6 +189,7 @@
           </div>
           </div>
           <!-- /.jumbo -->
+          <button @click='searchSerieCast(serie.id)'>Search cast</button>
         </div>
         <!-- /.serie -->
         <h5>{{ problem }}</h5>
@@ -308,9 +315,23 @@ export default {
           this.casts = response.data.cast
           console.log(this.casts)
           this.flagsLanguage(this.movies)
-
-          // console.log(this.flagsLanguage(this.series))
-          // this.idList(this.movies)
+        })
+        .catch((error) => {
+          // console.log(error)
+          this.problem = error
+        })
+    },
+    searchSerieCast (id) {
+      this.id = id
+      console.log(id)
+      axios
+        // eslint-disable-next-line quotes
+        .get(`https://api.themoviedb.org/3/tv/${this.id}/credits?api_key=2c70cf7212141e650767768ea94e23e6&language=en-US`)
+        .then((response) => {
+          // console.log(response)
+          this.casts = response.data.cast
+          console.log(this.casts)
+          this.flagsLanguage(this.series)
         })
         .catch((error) => {
           // console.log(error)
